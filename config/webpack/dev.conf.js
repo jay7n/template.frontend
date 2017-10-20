@@ -13,7 +13,7 @@ var devWebpackConfig = merge(baseWebpackConfig, {
     devtool: 'inline-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'A Stupid App Dev ♘',
+            title: Conf.Dev.HtmlTitle,
             template: path.resolve(Conf.RootPath, 'source', 'index.html'),
             inject: true,
             chunksSortMode: 'dependency'

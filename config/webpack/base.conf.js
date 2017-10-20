@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 var Conf = require('../conf')
 
@@ -82,21 +81,6 @@ module.exports = (function() {
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'manifest',
                 chunks: ['vendor']
-            }),
-
-            new HtmlWebpackPlugin({
-                title: 'A Stupid App ♞',
-                template: path.resolve(Conf.RootPath, 'source', 'index.html'),
-                inject: true,
-                minify: {
-                    removeComments: true,
-                    collapseWhitespace: true,
-                    removeAttributeQuotes: true
-                    // more options:
-                    // https://github.com/kangax/html-minifier#options-quick-reference
-                },
-                // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-                chunksSortMode: 'dependency'
             }),
         ]
     }

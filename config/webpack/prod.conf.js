@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var merge = require('webpack-merge')
 var CleanWebpackPlugin = require('clean-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 var Conf = require('../conf')
 var baseWebpackConfig = require('./base.conf')
@@ -40,6 +41,20 @@ var prodWebpackConfig = merge(baseWebpackConfig, {
             }
         ]),
 
+        new HtmlWebpackPlugin({
+            title: Conf.Prod.HtmlTitle,
+            template: path.resolve(Conf.RootPath, 'source', 'index.html'),
+            inject: true,
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeAttributeQuotes: true
+                // more options:
+                // https://github.com/kangax/html-minifier#options-quick-reference
+            },
+            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+            chunksSortMode: 'dependency'
+        }),
     ]
 })
 

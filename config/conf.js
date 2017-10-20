@@ -6,11 +6,13 @@ exports.DistPath = path.resolve(__dirname, '..', 'dist')
 
 exports.Dev = {
     Host: '127.0.0.1',
-    Port:9526
+    Port:9526,
+    HtmlTitle: 'A Stupid App Dev ♘'
 }
 
 exports.Prod = {
-    Port: 9527
+    Port: 9527,
+    HtmlTitle: 'A Stupid App ♞'
 }
 
 exports.AutoOpenBrowser = true
