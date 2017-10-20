@@ -2,7 +2,7 @@ const path = require('path')
 
 exports.RootPath = path.resolve(__dirname, '..')
 
-exports.DistPath = path.resolve(__dirname, '..', 'dist')
+exports.DistPath = path.resolve(exports.RootPath, 'dist')
 
 exports.Dev = {
     Host: '127.0.0.1',
