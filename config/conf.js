@@ -1,27 +1,27 @@
-var path = require('path')
+const path = require('path')
 
-module.exports = {
-    RootPath: path.resolve(__dirname, '..'),
+exports.RootPath = path.resolve(__dirname, '..')
 
-    Dev: {
-        Host: '127.0.0.1',
-        Port:9526
+exports.DistPath = path.resolve(__dirname, '..', 'dist')
+
+exports.Dev = {
+    Host: '127.0.0.1',
+    Port:9526
+}
+
+exports.Prod = {
+    Port: 9527
+}
+
+exports.AutoOpenBrowser = true
+
+exports.HMR = false
+
+exports.FtpDeploy = {
+    Dist: {
+        Local: exports.DistPath,
+        Remote: '/htdocs/example/demo/',
     },
-
-    Prod: {
-        Port: 9527
-    },
-
-    AutoOpenBrowser: true,
-
-    HMR: false,
-
-    FtpDeploy: {
-        Dist: {
-            Local: path.join(__dirname, '..', 'dist'),
-            Remote: '/htdocs/playcanvasplayground/demo/',
-        },
-        Host: 'example.ftp.com',
-        WWW: 'http://example.com/'
-    }
+    Host: 'example.ftp.com',
+    WWW: 'http://example.com/'
 }

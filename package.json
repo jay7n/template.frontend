@@ -8,12 +8,11 @@
     "build-all": "node build/build-all.js",
     "prod": "node build/prod.js",
     "dev": "node build/dev.js",
+    "deploy": "node build/deploy.js",
     "watch": "webpack --progress --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "eslint --format \"node_modules/eslint-friendly-formatter\"",
-    "checkall": "eslint --format \"node_modules/eslint-friendly-formatter\" source/*.js",
-    "clean": "rm -r dist; rm -r third; rm -r node_modules; echo 'done\n'",
-    "deploy": "node build/ftp-deploy.js"
+    "checkall": "eslint --format \"node_modules/eslint-friendly-formatter\" source/*.js"
   },
   "keywords": [
     "playcavas"
@@ -31,8 +30,6 @@
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.6.0",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-latest": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
     "chalk": "^2.1.0",
     "clean-webpack-plugin": "0.1.16",

@@ -12,8 +12,8 @@ var prodWebpackConfig = merge(baseWebpackConfig, {
         filename: 'js/[name].[chunkhash].js',
     },
     plugins: [
-        new CleanWebpackPlugin(['dist'], {
-            root: path.resolve(Conf.RootPath),
+        new CleanWebpackPlugin([path.basename(Conf.DistPath)], {
+            root: path.dirname(Conf.DistPath),
             verbose: true,
             dry: false,
         }),
@@ -35,7 +35,7 @@ var prodWebpackConfig = merge(baseWebpackConfig, {
         new CopyWebpackPlugin([
             {
                 from: path.resolve(Conf.RootPath, 'assets'),
-                to: path.resolve(Conf.RootPath, 'dist', 'assets'),
+                to: path.resolve(Conf.DistPath, 'assets'),
                 ignore: ['.*']
             }
         ]),

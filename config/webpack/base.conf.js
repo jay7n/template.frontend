@@ -10,7 +10,7 @@ module.exports = (function() {
             app: ['babel-polyfill', path.resolve(Conf.RootPath, 'source', 'main.js')]
         },
         output: {
-            path: path.resolve(Conf.RootPath, 'dist'),
+            path: Conf.DistPath,
             filename: '[name].js',
         },
         resolve: {

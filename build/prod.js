@@ -28,11 +28,13 @@ function _build_prod() {
     })
 }
 
+console.log(Conf.DistPath)
+
 function _start_server(port) {
     return new Promise((resolve, reject) => {
         const express = require('express')
         const app = express()
-        app.use('/', express.static(path.resolve(Conf.RootPath, 'dist')))
+        app.use('/', express.static(Conf.DistPath))
         app.listen(port, function(err) {
             if (err) reject(err)
             opn(`http://127.0.0.1:${port}`)
