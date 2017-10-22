@@ -16,7 +16,6 @@ module.exports = (function() {
             extensions: ['.js'],
             alias: {
                 '@': path.resolve(Conf.RootPath, 'source'),
-                'play-canvas': path.resolve(Conf.RootPath, 'third', 'play-canvas')
             },
         },
         module: {
@@ -32,10 +31,6 @@ module.exports = (function() {
                 },
                 {
                     test: /\.js$/,
-                    exclude: [
-                        // third/play-canvas/index.js has been built&transformed via their toolchains, thus we should not transform it again
-                        path.resolve(Conf.RootPath, 'third', 'play-canvas')
-                    ],
                     loader: 'babel-loader',
                 },
                 {
