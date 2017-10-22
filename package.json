@@ -1,7 +1,7 @@
 {
-  "name": "playcanvas-playground",
+  "name": "template.frontend",
   "version": "1.0.0",
-  "description": "a demo project as a playground for exploring playcanvas in a structural way",
+  "description": "a frontend template",
   "main": "index.js",
   "scripts": {
     "build-play-canvas": "node build/build-play-canvas.js",
@@ -59,8 +59,9 @@
     "webpack-merge": "4.1.0"
   },
   "dependencies": {
+    "axios": "^0.17.0",
+    "lodash": "4.17.4",
     "mathjs": "3.16.3",
-    "urijs": "^1.18.12",
-    "lodash": "4.17.4"
+    "urijs": "^1.18.12"
   }
 }
