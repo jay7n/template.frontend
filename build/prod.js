@@ -28,8 +28,6 @@ function _build_prod() {
     })
 }
 
-console.log(Conf.DistPath)
-
 function _start_server(port) {
     return new Promise((resolve, reject) => {
         const express = require('express')
