@@ -27,3 +27,5 @@ exports.FtpDeploy = {
     Host: 'example.ftp.com',
     WWW: 'http://example.com/'
 }
+
+exports.LoggerPrompt = 'TemplateFront'
