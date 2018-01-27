@@ -20,12 +20,18 @@ function _log_start_listen() {
 }
 
 function main() {
+    const isHMRMode = Conf.HMR
+    let hotMiddleware = null
+
     const express = require('express')
     const webpackDevMiddleware = require('webpack-dev-middleware')
 
-    Object.keys(devWebpackConfig.entry).forEach(function (name) {
-        devWebpackConfig.entry[name] = ['webpack-hot-middleware/client'].concat(devWebpackConfig.entry[name])
-    })
+    if (isHMRMode) {
+        Object.keys(devWebpackConfig.entry).forEach(function (name) {
+            devWebpackConfig.entry[name] = ['webpack-hot-middleware/client'].concat(devWebpackConfig.entry[name])
+        })
+    }
+
     const compiler = webpack(devWebpackConfig)
 
     const devMiddleware = webpackDevMiddleware(compiler, {
@@ -36,9 +42,6 @@ function main() {
     const app = express()
     app.use(devMiddleware)
     app.use('/assets', express.static(path.resolve(Conf.RootPath, 'assets')))
-
-    const isHMRMode = Conf.HMR
-    let hotMiddleware = null
 
     if (isHMRMode) {
         console.log(chalk.cyan('HMR mode triggered.'))
