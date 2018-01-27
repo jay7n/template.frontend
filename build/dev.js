@@ -20,78 +20,55 @@ function _log_start_listen() {
 }
 
 function main() {
-    // using Hot Module Replacement ?
-    if (Conf.HMR) {
-        const express = require('express')
-        const webpackDevMiddleware = require('webpack-dev-middleware')
+    const express = require('express')
+    const webpackDevMiddleware = require('webpack-dev-middleware')
+
+    Object.keys(devWebpackConfig.entry).forEach(function (name) {
+        devWebpackConfig.entry[name] = ['webpack-hot-middleware/client'].concat(devWebpackConfig.entry[name])
+    })
+    const compiler = webpack(devWebpackConfig)
+
+    const devMiddleware = webpackDevMiddleware(compiler, {
+        publicPath: devWebpackConfig.output.publicPath,
+        inline: true,
+    })
+
+    const app = express()
+    app.use(devMiddleware)
+    app.use('/assets', express.static(path.resolve(Conf.RootPath, 'assets')))
+
+    const isHMRMode = Conf.HMR
+    let hotMiddleware = null
+
+    if (isHMRMode) {
+        console.log(chalk.cyan('HMR mode triggered.'))
         const webpackHotMiddleware = require('webpack-hot-middleware')
-
-        Object.keys(devWebpackConfig.entry).forEach(function (name) {
-            devWebpackConfig.entry[name] = ['webpack-hot-middleware/client'].concat(devWebpackConfig.entry[name])
-        })
-        const compiler = webpack(devWebpackConfig)
-
-        const devMiddleware = webpackDevMiddleware(compiler, {
-            publicPath: devWebpackConfig.output.publicPath,
-            inline: true,
-        })
-
-        const hotMiddleware = webpackHotMiddleware(compiler, {
+        hotMiddleware = webpackHotMiddleware(compiler, {
             log: () => {}
         })
-
-        // force page reload when html-webpack-plugin template changes
-        compiler.plugin('compilation', function (compilation) {
-            compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-                hotMiddleware.publish({ action: 'reload' })
-                cb()
-            })
-        })
-
-        const app = express()
-        app.use(devMiddleware)
-        app.use('/assets', express.static(path.resolve(Conf.RootPath, 'assets')))
         app.use(hotMiddleware)
+    }
 
-        const { host, port, uri, _report } = _log_start_listen()
-        const server = app.listen(port, host)
-
-        devMiddleware.waitUntilValid(() => {
-            _report()
-
-            if (Conf.AutoOpenBrowser) {
-                opn(uri)
+    // force page reload when html-webpack-plugin template changes
+    compiler.plugin('compilation', function (compilation) {
+        compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+            if (isHMRMode) {
+                hotMiddleware.publish({ action: 'reload' })
             }
+            cb()
         })
-    } else {
-        const devWebpackConfigPath = path.resolve(Conf.RootPath, 'config', 'webpack', 'dev.conf.js')
-        const { host, port, _report } = _log_start_listen()
+    })
 
-        let options = [
-            `--config ${devWebpackConfigPath}`,
-            `--host ${host}`,
-            `--port ${port}`,
-            '--inline',
-            '--hot',
-        ]
+    const { host, port, uri, _report } = _log_start_listen()
+    app.listen(port, host)
+
+    devMiddleware.waitUntilValid(() => {
+        _report()
 
         if (Conf.AutoOpenBrowser) {
-            options.push('--open')
+            opn(uri)
         }
-
-        options = options.join(' ')
-
-        const devServerBin = path.resolve(Conf.RootPath, 'node_modules', 'webpack-dev-server','bin', 'webpack-dev-server.js')
-        let cmd = `node ${devServerBin} ${options}`
-
-        // console.log(chalk.green(`now ready to exec cmd:\n\t${cmd}\n`))
-
-        const { exec } = require('child_process')
-
-        const p = exec(cmd)
-        p.stdout.on('data', (data) => console.log(chalk.green(data)))
-        p.stderr.on('data', (data) => console.log(chalk.yellow(data)))
-    }
+    })
 }
 
 
