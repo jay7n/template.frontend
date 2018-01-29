@@ -1,7 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
 
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 var Conf = require('../conf')
+
 
 module.exports = (function() {
     var baseConfig = {
@@ -34,6 +37,13 @@ module.exports = (function() {
                     loader: 'babel-loader',
                 },
                 {
+                    test: /\.css$/,
+                    use:  ExtractTextPlugin.extract({
+                        fallback: "style-loader",
+                        use: "css-loader"
+                    })
+                },
+                {
                     test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -48,7 +58,7 @@ module.exports = (function() {
                         limit: 10000,
                         name: 'fonts/[name].[hash:7].[ext]'
                     }
-                }
+                },
             ],
         },
         plugins: [
@@ -77,6 +87,7 @@ module.exports = (function() {
                 name: 'manifest',
                 chunks: ['vendor']
             }),
+            new ExtractTextPlugin("styles.css"),
         ]
     }
 
