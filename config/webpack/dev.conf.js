@@ -25,7 +25,10 @@ var devWebpackConfig = merge(baseWebpackConfig, {
             BUILD: {
                 MODE: JSON.stringify('develop'),
                 DEBUG: true,
-            }
+            },
+            'process.env': {
+                NODE_ENV: JSON.stringify('develoment'),
+            },
         }),
     ]
 })

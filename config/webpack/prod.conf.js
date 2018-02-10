@@ -24,7 +24,10 @@ var prodWebpackConfig = merge(baseWebpackConfig, {
             BUILD: {
                 MODE: JSON.stringify('production'),
                 DEBUG: false,
-            }
+            },
+            'process.env': {
+                NODE_ENV: JSON.stringify('production'),
+            },
         }),
 
         new webpack.optimize.UglifyJsPlugin({

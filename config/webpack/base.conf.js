@@ -2,6 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 var Conf = require('../conf')
 
@@ -88,6 +89,7 @@ module.exports = (function() {
                 chunks: ['vendor']
             }),
             new ExtractTextPlugin("styles.css"),
+            new FriendlyErrorsPlugin(),
         ]
     }
 
